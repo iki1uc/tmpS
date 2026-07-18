@@ -3,36 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Universal Index</title>
+<title>Universal Index – RAW6D / NC²</title>
+
 <style>
-body { font-family: Arial; background:#111; color:#eee; padding:20px; }
-a { color:#6cf; text-decoration:none; }
+body { font-family: Arial; background:#0b0b0b; color:#e6e6e6; padding:20px; }
+h1 { color:#4cc3ff; }
+a { color:#4cc3ff; text-decoration:none; }
 a:hover { text-decoration:underline; }
-.container { max-width:900px; margin:auto; }
-h1 { color:#6cf; }
 ul { list-style:none; padding:0; }
 li { padding:6px 0; border-bottom:1px solid #333; }
+.container { max-width:900px; margin:auto; }
 </style>
 </head>
+
 <body>
 <div class="container">
-<h1>Universal Index</h1>
-<p>Automatische Auflistung aller Dateien & Ordner.</p>
+<h1>Universal Index – Auto‑Scan</h1>
+<p>Automatische Auflistung aller Dateien, Ordner und RAW6D‑Container.</p>
 
 <script>
 async function load() {
   const response = await fetch(".");
-  const text = await response.text();
+  const html = await response.text();
 
-  // HTML Directory Parsing (universal)
   const parser = new DOMParser();
-  const doc = parser.parseFromString(text, "text/html");
+  const doc = parser.parseFromString(html, "text/html");
   const links = [...doc.querySelectorAll("a")];
 
   const list = document.createElement("ul");
 
   links.forEach(link => {
-    const name = link.textContent;
+    const name = link.textContent.trim();
     if (name !== "../") {
       const li = document.createElement("li");
       li.innerHTML = `<a href="${link.getAttribute("href")}">${name}</a>`;
