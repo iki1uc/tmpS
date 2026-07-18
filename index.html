@@ -3,50 +3,56 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Universal Index – RAW6D / NC²</title>
+<title>Ordner-Index U/Q/T/H/B</title>
 
 <style>
-body { font-family: Arial; background:#0b0b0b; color:#e6e6e6; padding:20px; }
-h1 { color:#4cc3ff; }
-a { color:#4cc3ff; text-decoration:none; }
+body { font-family: Arial; background:#111; color:#eee; padding:20px; }
+h2 { color:#6cf; margin-top:30px; }
+a { color:#6cf; text-decoration:none; }
 a:hover { text-decoration:underline; }
 ul { list-style:none; padding:0; }
-li { padding:6px 0; border-bottom:1px solid #333; }
-.container { max-width:900px; margin:auto; }
+li { padding:4px 0; border-bottom:1px solid #333; }
 </style>
 </head>
 
 <body>
-<div class="container">
-<h1>Universal Index – Auto‑Scan</h1>
-<p>Automatische Auflistung aller Dateien, Ordner und RAW6D‑Container.</p>
+<h1>Index – U / Q / T / H / B</h1>
+<p>Automatische Anzeige der Ordner (X und Y werden ignoriert).</p>
 
 <script>
-async function load() {
-  const response = await fetch(".");
-  const html = await response.text();
+const folders = ["U", "Q", "T", "H", "B"];
 
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(html, "text/html");
-  const links = [...doc.querySelectorAll("a")];
+async function scanFolder(folder) {
+  try {
+    const res = await fetch(folder + "/");
+    if (!res.ok) return; // Ordner existiert nicht
 
-  const list = document.createElement("ul");
+    const html = await res.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    const links = [...doc.querySelectorAll("a")];
 
-  links.forEach(link => {
-    const name = link.textContent.trim();
-    if (name !== "../") {
-      const li = document.createElement("li");
-      li.innerHTML = `<a href="${link.getAttribute("href")}">${name}</a>`;
-      list.appendChild(li);
-    }
-  });
+    const section = document.createElement("div");
+    section.innerHTML = `<h2>${folder}</h2><ul></ul>`;
+    const ul = section.querySelector("ul");
 
-  document.body.appendChild(list);
+    links.forEach(link => {
+      const name = link.textContent.trim();
+      if (name !== "../") {
+        const li = document.createElement("li");
+        li.innerHTML = `<a href="${folder}/${link.getAttribute("href")}">${name}</a>`;
+        ul.appendChild(li);
+      }
+    });
+
+    document.body.appendChild(section);
+  } catch (e) {
+    // Ordner nicht vorhanden → ignorieren
+  }
 }
 
-load();
+folders.forEach(scanFolder);
 </script>
 
-</div>
 </body>
 </html>
