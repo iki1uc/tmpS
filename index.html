@@ -2,36 +2,50 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>s – Struktur / System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Universal Index</title>
 <style>
-  body { background:#111; color:#eee; font-family:Arial; padding:40px; }
-  .box { background:#222; border:1px solid #444; padding:20px; margin-bottom:20px; }
-  h1 { text-align:center; color:#ff4444; }
+body { font-family: Arial; background:#111; color:#eee; padding:20px; }
+a { color:#6cf; text-decoration:none; }
+a:hover { text-decoration:underline; }
+.container { max-width:900px; margin:auto; }
+h1 { color:#6cf; }
+ul { list-style:none; padding:0; }
+li { padding:6px 0; border-bottom:1px solid #333; }
 </style>
 </head>
-
 <body>
+<div class="container">
+<h1>Universal Index</h1>
+<p>Automatische Auflistung aller Dateien & Ordner.</p>
 
-<h1>s – Struktur / System / Seele</h1>
+<script>
+async function load() {
+  const response = await fetch(".");
+  const text = await response.text();
 
-<div class="box">
-  <h2>Geometrie: Quadrat → Pentagramm</h2>
-  <p>s bildet die Struktur und öffnet die Seele.</p>
+  // HTML Directory Parsing (universal)
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(text, "text/html");
+  const links = [...doc.querySelectorAll("a")];
+
+  const list = document.createElement("ul");
+
+  links.forEach(link => {
+    const name = link.textContent;
+    if (name !== "../") {
+      const li = document.createElement("li");
+      li.innerHTML = `<a href="${link.getAttribute("href")}">${name}</a>`;
+      list.appendChild(li);
+    }
+  });
+
+  document.body.appendChild(list);
+}
+
+load();
+</script>
+
 </div>
-
-<div class="box">
-  <h2>Frequenz: 444 Hz</h2>
-  <p>Die Strukturfrequenz für Ordnung.</p>
-</div>
-
-<div class="box">
-  <h2>Achse: s‑Axis</h2>
-  <pre>
-s = Struktur
-s = System
-s = Seele
-  </pre>
-</div>
-
 </body>
 </html>
