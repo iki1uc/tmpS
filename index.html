@@ -1,58 +1,26 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ordner-Index U/Q/T/H/B</title>
+<h1>s – Struktur / System / Seele</h1>
 
-<style>
-body { font-family: Arial; background:#111; color:#eee; padding:20px; }
-h2 { color:#6cf; margin-top:30px; }
-a { color:#6cf; text-decoration:none; }
-a:hover { text-decoration:underline; }
-ul { list-style:none; padding:0; }
-li { padding:4px 0; border-bottom:1px solid #333; }
-</style>
-</head>
+<div class="box">
+  <h2>Achse: 1 → 3 → 9 → 27 → 81</h2>
+  <p>s bildet Struktur, System und Seele im vollständigen Achsenraum.</p>
+</div>
 
-<body>
-<h1>Index – U / Q / T / H / B</h1>
-<p>Automatische Anzeige der Ordner (X und Y werden ignoriert).</p>
+<div class="box">
+  <h2>Geometrie: Quadrat → Pentagramm → Systemfeld → Seelenraum</h2>
+  <p>Die s‑Ebene ist der Systemkern des iki1uc‑Systems.</p>
+</div>
 
-<script>
-const folders = ["U", "Q", "T", "H", "B"];
+<div class="box">
+  <h2>Frequenz: 444 Hz (3×9×27)</h2>
+  <p>Die Systemfrequenz der s‑Ebene.</p>
+</div>
 
-async function scanFolder(folder) {
-  try {
-    const res = await fetch(folder + "/");
-    if (!res.ok) return; // Ordner existiert nicht
-
-    const html = await res.text();
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, "text/html");
-    const links = [...doc.querySelectorAll("a")];
-
-    const section = document.createElement("div");
-    section.innerHTML = `<h2>${folder}</h2><ul></ul>`;
-    const ul = section.querySelector("ul");
-
-    links.forEach(link => {
-      const name = link.textContent.trim();
-      if (name !== "../") {
-        const li = document.createElement("li");
-        li.innerHTML = `<a href="${folder}/${link.getAttribute("href")}">${name}</a>`;
-        ul.appendChild(li);
-      }
-    });
-
-    document.body.appendChild(section);
-  } catch (e) {
-    // Ordner nicht vorhanden → ignorieren
-  }
-}
-
-folders.forEach(scanFolder);
-</script>
-
-</body>
-</html>
+<div class="box">
+  <h2>Achse: s‑Axis</h2>
+  <pre>
+s = Struktur
+s = System
+s = Seele
+s = 1 → 3 → 9 → 27 → 81
+  </pre>
+</div>
