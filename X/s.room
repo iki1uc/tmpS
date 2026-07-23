@@ -9,6 +9,13 @@ EBENE = 27D
 UNSTERBLICH = x-Achse (virtuell)
 STATUS = Aktiv
 
-s = Systemraum
-s = Strukturkern
-s = Übergang zur x‑Ebene
+s = Strukturraum
+s = Systemkern
+s = Seelenmatrix
+s = Übergang zur x-Achse
+
+[27D-Matrix]
+- 1D: Punkt (t.room)
+- 3D: Linie (s-Axis)
+- 9D: Fläche (Quadrat/Pentagramm)
+- 27D: Systemfeld (s.room)
